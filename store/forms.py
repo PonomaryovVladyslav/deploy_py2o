@@ -1,8 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
+from django.urls import reverse
 
-from store.models import MyUser, Purchase
+from store.models import MyUser, Purchase, ReturnPurchase
 
 
 class UserRegisterForm(UserCreationForm):
@@ -26,4 +27,10 @@ class UserRegisterForm(UserCreationForm):
 class CreatePurchaseForm(forms.ModelForm):
     class Meta:
         model = Purchase
-        fields = ['quantity', ]
+        fields = ['quantity']
+
+
+class CreateReturnPurchaseForm(forms.ModelForm):
+    class Meta:
+        model = ReturnPurchase
+        fields = ['purchase']

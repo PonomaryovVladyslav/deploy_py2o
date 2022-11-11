@@ -28,7 +28,7 @@ class Purchase(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ['date']
+        ordering = ['-date']
         verbose_name = 'purchase'
         verbose_name_plural = 'purchases'
 

@@ -1,13 +1,20 @@
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.forms import UserCreationForm
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, ListView
 from django.views.generic.base import TemplateView
 
-from store.forms import UserRegisterForm, CreatePurchaseForm
-from store.models import Product, Purchase, MyUser
+from store.forms import UserRegisterForm, CreatePurchaseForm, CreateReturnPurchaseForm
+from store.models import Product, Purchase
+
+
+class HomePageView(ListView):
+    model = Product
+    template_name = 'store/home.html'
+    extra_context = {'form': CreatePurchaseForm}
 
 
 class RegisterUserView(CreateView):
@@ -32,34 +39,44 @@ class CreateProductView(CreateView):
 
 
 class UpdateProductView(UpdateView):
-    # model = Product
-    # fields = ['title', 'description', 'price', 'quantity']
-    form_class = CreatePurchaseForm
+    model = Product
+    fields = ['title', 'description', 'price', 'quantity']
     template_name = 'store/update_product.html'
     success_url = reverse_lazy('home')
 
 
 class CreatePurchaseView(CreateView):
-    model = Purchase
-    fields = ['quantity']
+    form_class = CreatePurchaseForm
     template_name = 'store/home.html'
-    success_url = reverse_lazy('home')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['products'] = Product.objects.all()
-        context['form'] = CreatePurchaseForm()
-        return context
+    success_url = reverse_lazy('purchases')
 
     def form_valid(self, form):
-        obj = form.save(commit=False)
-        obj.customer = self.request.user
-        obj.product = Product.objects.get(id=self.kwargs.get('pk'))
-        obj.save()
-        return super().form_valid(form=obj)
+        self.object = form.save(commit=False)
+        pk = self.kwargs.get('pk')
+        self.object.customer = self.request.user
+        self.object.product = Product.objects.get(id=pk)
+        self.object.save()
+        return super().form_valid(form)
 
 
-# class CreatePurchaseView(ListView):
-#     model = Product
-#     paginate_by = 10
-#     template_name = 'store/home.html'
+class UserPurchaseView(ListView):
+    model = Purchase
+    template_name = 'store/purchase.html'
+    extra_context = {'form': CreateReturnPurchaseForm}
+
+    def get_queryset(self):
+        pk = self.request.user.id
+        queryset = Purchase.objects.filter(customer_id=pk)
+        return queryset
+
+
+class CreateReturnPurchaseView(CreateView):
+    form_class = CreateReturnPurchaseForm
+    template_name = 'store/purchase.html'
+    success_url = reverse_lazy('purchases')
+
+    # def get(self, request, *args, **kwargs):
+    #     pk = self.kwargs.get('pk')
+    #     self.object = Purchase.objects.get(id=pk)
+    #     self.object.save()
+    #     return super().get(request, *args, **kwargs)
