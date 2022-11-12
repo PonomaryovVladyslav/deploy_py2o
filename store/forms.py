@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from store.models import MyUser, Purchase, ReturnPurchase
 
 
-class UserRegisterForm(UserCreationForm):
+class UserCreateForm(UserCreationForm):
     username = forms.CharField(label='Login', widget=forms.TextInput)
     email = forms.EmailField(widget=forms.EmailInput)
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
@@ -23,13 +23,13 @@ class UserRegisterForm(UserCreationForm):
         return email
 
 
-class CreatePurchaseForm(forms.ModelForm):
+class PurchaseCreateForm(forms.ModelForm):
     class Meta:
         model = Purchase
         fields = ['quantity']
 
 
-class CreateReturnPurchaseForm(forms.ModelForm):
+class ReturnCreateForm(forms.ModelForm):
     purchase = forms.ModelChoiceField(queryset=Purchase.objects.all(), required=False, widget=forms.HiddenInput)
 
     class Meta:

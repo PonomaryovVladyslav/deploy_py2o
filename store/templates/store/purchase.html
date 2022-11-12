@@ -1,6 +1,7 @@
 {% extends 'store/base.html' %}
 {% block title %}Purchases{% endblock %}
 {% block content %}
+    {% include 'includes/navigation.html' %}
     <h2>Purchases</h2>
     {% for purchase in  object_list %}
         <div>
@@ -9,13 +10,11 @@
             {{ purchase.quantity }}
             {{ purchase.date }}
             {{ purchase.customer }}
-            <form action="{% url 'add_return_purchase' pk=purchase.id %}" method="post">
+            <form action="{% url 'add_return' %}" method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit" value="{{ purchase.id }}" name="return">Return</button>
+                <button type="submit" value="{{ purchase.id }}" name="_purchase">Return</button>
             </form>
         </div>
     {% endfor %}
-    <a href="{% url 'returns' %}">Returns</a>
-    <a href="{% url 'home' %}">Home</a>
 {% endblock %}
