@@ -1,6 +1,6 @@
 from django.contrib.auth import login, authenticate
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView, ListView
+from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 
 from store.forms import UserCreateForm, PurchaseCreateForm, ReturnCreateForm
 from store.models import Product, Purchase, ReturnPurchase
@@ -92,3 +92,14 @@ class ReturnCreateView(CreateView):
         obj.purchase = Purchase.objects.get(id=purchase_id)
         obj.save()
         return super().form_valid(form)
+
+
+class ReturnDeleteView(DeleteView):
+    model = ReturnPurchase
+    success_url = reverse_lazy('returns')
+
+
+class PurchaseDeleteView(DeleteView):
+    model = Purchase
+    success_url = reverse_lazy('returns')
+

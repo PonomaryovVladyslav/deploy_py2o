@@ -1,8 +1,11 @@
 from django.contrib.auth import views
-from django.urls import path
+from django.urls import path, reverse_lazy
+from django.views.generic import DeleteView
 
+from store.models import ReturnPurchase
 from store.views import UserCreateView, ProductCreateView, ProductUpdateView,\
-    PurchaseCreateView, ProductListView, PurchaseListView, ReturnCreateView, ReturnListView
+    PurchaseCreateView, ProductListView, PurchaseListView, ReturnCreateView, \
+    ReturnListView, ReturnDeleteView, PurchaseDeleteView
 
 urlpatterns = [
     path('', ProductListView.as_view(), name='home'),
@@ -15,4 +18,6 @@ urlpatterns = [
     path('purchases/', PurchaseListView.as_view(), name='purchases'),
     path('add-return/', ReturnCreateView.as_view(), name='add_return'),
     path('returns/', ReturnListView.as_view(), name='returns'),
+    path('delete-return/<int:pk>', ReturnDeleteView.as_view(), name='delete_return'),
+    path('delete-purchase/<int:pk>', PurchaseDeleteView.as_view(), name='delete_purchase'),
 ]

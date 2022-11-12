@@ -11,10 +11,13 @@
             {{ return.date }}
             {{ return.purchase.customer }}
             {% if user.is_superuser %}
-                <form action="" method="post">
-                    {{ form.as_p }}
-                    <button type="submit">accept</button>
+                <form action="{% url 'delete_return' return.id %}" method="post">
+                    {% csrf_token %}
                     <button type="submit">reject</button>
+                </form>
+                <form action="{% url 'delete_purchase' return.purchase.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">confirm</button>
                 </form>
             {% endif %}
         </div>
