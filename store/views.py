@@ -8,7 +8,7 @@ from django.views.generic import CreateView, UpdateView, ListView
 from django.views.generic.base import TemplateView
 
 from store.forms import UserRegisterForm, CreatePurchaseForm, CreateReturnPurchaseForm
-from store.models import Product, Purchase
+from store.models import Product, Purchase, ReturnPurchase
 
 
 class HomePageView(ListView):
@@ -51,11 +51,11 @@ class CreatePurchaseView(CreateView):
     success_url = reverse_lazy('purchases')
 
     def form_valid(self, form):
-        self.object = form.save(commit=False)
+        obj = form.save(commit=False)
         pk = self.kwargs.get('pk')
-        self.object.customer = self.request.user
-        self.object.product = Product.objects.get(id=pk)
-        self.object.save()
+        obj.customer = self.request.user
+        obj.product = Product.objects.get(id=pk)
+        obj.save()
         return super().form_valid(form)
 
 
@@ -65,18 +65,35 @@ class UserPurchaseView(ListView):
     extra_context = {'form': CreateReturnPurchaseForm}
 
     def get_queryset(self):
-        pk = self.request.user.id
-        queryset = Purchase.objects.filter(customer_id=pk)
+        if not self.request.user.is_superuser:
+            pk = self.request.user.id
+            queryset = Purchase.objects.filter(customer_id=pk)
+            return queryset
+        queryset = Purchase.objects.all()
         return queryset
 
 
 class CreateReturnPurchaseView(CreateView):
     form_class = CreateReturnPurchaseForm
     template_name = 'store/purchase.html'
-    success_url = reverse_lazy('purchases')
+    success_url = reverse_lazy('returns')
 
-    # def get(self, request, *args, **kwargs):
-    #     pk = self.kwargs.get('pk')
-    #     self.object = Purchase.objects.get(id=pk)
-    #     self.object.save()
-    #     return super().get(request, *args, **kwargs)
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        pk = self.request.POST.get('return')
+        obj.purchase = Purchase.objects.get(id=pk)
+        obj.save()
+        return super().form_valid(form)
+
+
+class UserReturnPurchaseView(ListView):
+    model = ReturnPurchase
+    template_name = 'store/return_purchase.html'
+
+    def get_queryset(self):
+        if not self.request.user.is_superuser:
+            pk = self.request.user.id
+            queryset = ReturnPurchase.objects.filter(purchase__customer_id=pk)
+            return queryset
+        queryset = ReturnPurchase.objects.all()
+        return queryset

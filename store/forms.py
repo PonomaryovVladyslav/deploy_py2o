@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
-from django.urls import reverse
 
 from store.models import MyUser, Purchase, ReturnPurchase
 
@@ -31,6 +30,8 @@ class CreatePurchaseForm(forms.ModelForm):
 
 
 class CreateReturnPurchaseForm(forms.ModelForm):
+    purchase = forms.ModelChoiceField(queryset=Purchase.objects.all(), required=False, widget=forms.HiddenInput)
+
     class Meta:
         model = ReturnPurchase
         fields = ['purchase']

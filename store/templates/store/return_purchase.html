@@ -1,0 +1,22 @@
+{% extends 'store/base.html' %}
+{% block title %}Returns{% endblock %}
+{% block content %}
+    <h2>Returns</h2>
+    {% for return in  object_list %}
+        <div>
+            {{ return }}
+            {{ return.purchase.product.description }}
+            {{ return.id }}
+            {{ return.date }}
+            {{ return.purchase.customer }}
+            {% if user.is_superuser %}
+                <form action="" method="post">
+                    {{ form.as_p }}
+                    <button type="submit">confirm</button>
+                </form>
+            {% endif %}
+        </div>
+    {% endfor %}
+    <a href="{% url 'purchases' %}">Purchases</a>
+    <a href="{% url 'home' %}">Home</a>
+{% endblock %}

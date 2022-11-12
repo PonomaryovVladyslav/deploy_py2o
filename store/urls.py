@@ -2,7 +2,7 @@ from django.contrib.auth import views
 from django.urls import path
 
 from store.views import RegisterUserView, CreateProductView, UpdateProductView,\
-    CreatePurchaseView, HomePageView, UserPurchaseView, CreateReturnPurchaseView
+    CreatePurchaseView, HomePageView, UserPurchaseView, CreateReturnPurchaseView, UserReturnPurchaseView
 
 urlpatterns = [
     path('', HomePageView.as_view(), name='home'),
@@ -13,5 +13,6 @@ urlpatterns = [
     path('update-product/<int:pk>', UpdateProductView.as_view(), name='update_product'),
     path('add-purchase/<int:pk>', CreatePurchaseView.as_view(), name='add_purchase'),
     path('purchases/', UserPurchaseView.as_view(), name='purchases'),
-    path('add-return-purchese/<int:pk>', CreateReturnPurchaseView.as_view(), name='add_return_purchase')
+    path('add-return-purchese/<int:pk>', CreateReturnPurchaseView.as_view(), name='add_return_purchase'),
+    path('returns/', UserReturnPurchaseView.as_view(), name='returns'),
 ]
