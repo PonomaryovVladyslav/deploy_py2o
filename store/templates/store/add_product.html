@@ -1,11 +1,12 @@
 {% extends 'store/base.html' %}
 {% block title %}Create product{% endblock %}
 {% block content %}
-    {% include 'includes/navigation.html' %}
+    <div class="edit_product">
     <h2>Create product</h2>
     <form action="" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Create</button>
     </form>
+    </div>
 {% endblock %}

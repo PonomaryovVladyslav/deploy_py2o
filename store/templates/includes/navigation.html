@@ -1,3 +1,4 @@
+<div class="navi">
 <a href="{% url 'home' %}">Home</a>
 {% if not user.is_authenticated %}
     <a href="{% url 'login' %}">Log in</a>
@@ -17,5 +18,4 @@
         <p>Deposit {{ user.deposit }} $</p>
     {% endif %}
 {% endif %}
-
-
+</div>

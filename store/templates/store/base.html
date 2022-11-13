@@ -2,12 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'store/css/style.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Play:wght@400;700&display=swap" rel="stylesheet">
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-    {% block content %}
-
-    {% endblock %}
+    {% include 'includes/navigation.html' %}
+    <div class="main">
+        {% block content %}
+        {% endblock %}
+    </div>
 </body>
 </html>
