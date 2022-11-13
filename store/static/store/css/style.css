@@ -18,7 +18,7 @@ body {
     font-family: Play, sans-serif;
     font-size: 18px;
     width: 100%;
-    height: 20%;
+    height: 22%;
     margin: 0 0 20px 0;
 }
 
@@ -95,13 +95,19 @@ body {
     padding: 5px;
     text-decoration: none;
     font-size: 22px;
+    color: #000000;
+    box-shadow: 0 0 5px #4c4c4f;
+    border-radius: 5px;
+    background: #ffff;
+}
+
+.product > a:hover {
     color: #ffff;
     box-shadow: 0 0 5px #179f63;
-    border-radius: 5px;
     background: #179f63;
 }
 
-.main .edit_product {
+.main .main_form {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
@@ -114,35 +120,120 @@ body {
     background: #effff5;
 }
 
-.main .edit_product > h2 {
+.main .main_form > h2 {
     margin: 10px 0 10px 0;
 }
 
-.main .edit_product > form {
+.main .main_form > form {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.main .edit_product > form > p{
+.main .main_form > form > p{
     display: flex;
     justify-content: space-between;
-    width: 40%;
+    width: 50%;
 }
 
-.main .edit_product > form > p > input {
-    width: 220px;
+.main .main_form > form > p > input {
+    width: 70%;
     height: 20px;
 }
 
-.main .edit_product > form > button {
+.main .main_form > form > p > label {
+    width: 20%;
+}
+
+.main .main_form > form > button {
     width: 20%;
     height: 30px;
     margin: 10px;
     border: none;
-    box-shadow: 0 0 5px #179f63;
+    box-shadow: 0 0 5px #103c28;
     border-radius: 5px;
+    background: #ffff;
+    font-size: 18px;
+    font-family: Play, sans-serif;
+}
+
+.main .main_form > form > button:hover {
     background: #179f63;
     color: #ffff;
-    font-size: 18px;
+    box-shadow: 0 0 5px #179f63;
+}
+
+.main .list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 50%;
+    font-family: Play, sans-serif;
+    box-shadow: 0 0 5px #4c4c4f;
+    border-radius: 5px;
+    background: #effff5;
+    margin: 30px 0 30px 0;
+    padding: 10px;
+}
+
+.main .list > h2 {
+    width: 100%;
+}
+
+.main .list > div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    width: 80%;
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 0 0 2px #4c4c4f;
+    border-radius: 5px;
+    background: #ffff;
+}
+
+.main .list > div > span {
+    width: 100%;
+    margin: 5px;
+}
+
+.main .list > div > form > button {
+    font-family: Play, sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    width: 200px;
+    height: 30px;
+    margin: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+.return {
+    box-shadow: 0 0 5px #2068b7;
+    background: #ffff;
+}
+
+.return:hover {
+    background: #2068b7;
+    color: #ffff;
+}
+
+.confirm {
+    box-shadow: 0 0 5px #179f63;
+    background: #ffff;
+}
+
+.confirm:hover {
+    background: #179f63;
+    color: #ffff;
+}
+
+.reject {
+    box-shadow: 0 0 5px #c54c4c;
+    background: #ffff;
+}
+
+.reject:hover {
+    background: #c54c4c;
+    color: #ffff;
 }

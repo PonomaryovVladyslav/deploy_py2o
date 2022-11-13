@@ -1,19 +1,24 @@
 {% extends 'store/base.html' %}
 {% block title %}Purchases{% endblock %}
 {% block content %}
+    <div class="list">
     <h2>Purchases</h2>
     {% for purchase in  object_list %}
         <div>
-            {{ purchase }}
-            {{ purchase.id }}
-            {{ purchase.quantity }}
-            {{ purchase.date }}
-            {{ purchase.customer }}
-            <form action="{% url 'add_return' %}" method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" value="{{ purchase.id }}" name="_purchase">Return</button>
-            </form>
+            <span>Product: {{ purchase }} {{ purchase.product.description }}</span>
+            <span>Qty.: {{ purchase.quantity }}</span>
+            <span>Total amount: {{ purchase.product.price }} $</span>
+            {% if user.is_superuser %}
+                <span>Purchase ID: {{ purchase.id }}</span>
+                <span>Customer: {{ purchase.customer }}</span>
+            {% else %}
+                <form action="{% url 'add_return' %}" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button class="return" type="submit" value="{{ purchase.id }}" name="_purchase"><span>Return</span></button>
+                </form>
+            {% endif %}
         </div>
     {% endfor %}
+    </div>
 {% endblock %}
