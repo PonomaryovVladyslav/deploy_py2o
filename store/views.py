@@ -61,7 +61,9 @@ class PurchaseListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         if not self.request.user.is_superuser:
             customer_id = self.request.user.id
-            queryset = Purchase.objects.filter(customer_id=customer_id)
+            returns = ReturnPurchase.objects.filter(purchase__customer_id=customer_id)
+            returns_list = returns.values_list('purchase_id', flat=True)
+            queryset = Purchase.objects.filter(customer_id=customer_id).exclude(id__in=returns_list)
             return queryset
         queryset = Purchase.objects.all()
         return queryset

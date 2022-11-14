@@ -8,7 +8,7 @@
             <span>ID: {{ return.id }}</span>
             <span>Date: {{ return.date }}</span>
             <span>Product: {{ return }} {{ return.purchase.product.description }}</span>
-            <span>Refund amount: {{ return.purchase.product.price }} $</span>
+            <span>Refund amount: {{ return.purchase.purchase_amount }} $</span>
             {% if user.is_superuser %}
                 <span>Customer: {{ return.purchase.customer }}</span>
                 <form action="{% url 'delete_return' return.id %}" method="post">
