@@ -7,7 +7,7 @@
         <div>
             <span>Product: {{ purchase }} {{ purchase.product.description }}</span>
             <span>Qty.: {{ purchase.quantity }}</span>
-            <span>Total amount: {{ purchase.product.price }} $</span>
+            <span>Total amount: {{ purchase.purchase_amount }} $</span>
             {% if user.is_superuser %}
                 <span>Purchase ID: {{ purchase.id }}</span>
                 <span>Customer: {{ purchase.customer }}</span>

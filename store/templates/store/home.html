@@ -4,6 +4,7 @@
     {% for product in object_list %}
         <div class="product">
             <h3>{{ product.title }}</h3>
+            <img src="media/{{ product.image }}" alt="product_img">
             <p>{{ product.description }}</p>
             <p>Price: {{ product.price }} $</p>
             <p>Qty.: {{ product.quantity }}</p>
@@ -14,7 +15,7 @@
                     <form action="{% url 'add_purchase' %}" method="post">
                         {% csrf_token %}
                         {{ form.as_p }}
-                        <button type="submit" value="{{ product.id }}" name="_product">Buy now</button>
+                        <button type="submit" value="{{ product.id }}" name="_product"><span>Buy now</span></button>
                     </form>
                 {% endif %}
             {% endif %}

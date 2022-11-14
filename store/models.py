@@ -1,4 +1,5 @@
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import MinValueValidator
 from django.db import models
 
 
@@ -8,7 +9,8 @@ class MyUser(AbstractUser):
 
 class Product(models.Model):
     title = models.CharField(max_length=100)
-    description = models.CharField(max_length=250)
+    image = models.ImageField(upload_to='images', null=True, blank=True)
+    description = models.TextField()
     price = models.DecimalField(max_digits=7, decimal_places=2)
     quantity = models.PositiveSmallIntegerField()
 
@@ -34,6 +36,9 @@ class Purchase(models.Model):
 
     def __str__(self):
         return f'{self.product}'
+
+    def purchase_amount(self):
+        return self.quantity * self.product.price
 
 
 class ReturnPurchase(models.Model):

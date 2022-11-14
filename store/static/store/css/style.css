@@ -42,7 +42,7 @@ body {
 .product {
     display: flex;
     flex-wrap: wrap;
-    justify-content: right;
+    justify-content: center;
     background: #effff5;
     margin: 20px;
     padding: 15px;
@@ -58,6 +58,10 @@ body {
 
 .product > h3 {
     width: 100%;
+}
+
+.product > img {
+    width: 90%;
 }
 
 .product > p {
@@ -80,11 +84,22 @@ body {
     width: 30%;
 }
 
+.product > form > button > span {
+    font-family: Play, sans-serif;
+    font-weight: bold;
+}
+
 .product > form > button {
     width: 30%;
     height: 30px;
+    font-size: 16px;
     border: none;
     border-radius: 5px;
+    background: #ffff;
+    box-shadow: 0 0 5px #179f63;
+}
+
+.product > form > button:hover {
     background: #179f63;
     color: #ffff;
 }
