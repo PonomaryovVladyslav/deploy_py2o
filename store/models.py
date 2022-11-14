@@ -42,7 +42,7 @@ class Purchase(models.Model):
 
 
 class ReturnPurchase(models.Model):
-    purchase = models.ForeignKey(Purchase, on_delete=models.CASCADE)
+    purchase = models.OneToOneField(Purchase, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
 
     class Meta:

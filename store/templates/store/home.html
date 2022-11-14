@@ -12,10 +12,10 @@
                 {% if user.is_superuser %}
                     <a href="{% url 'update_product' product.id %}">Update</a>
                 {% else %}
-                    <form action="{% url 'add_purchase' %}" method="post">
+                    <form action="{% url 'add_purchase' product.id %}" method="post">
                         {% csrf_token %}
                         {{ form.as_p }}
-                        <button type="submit" value="{{ product.id }}" name="_product"><span>Buy now</span></button>
+                        <button type="submit" ><span>Buy now</span></button>
                     </form>
                 {% endif %}
             {% endif %}

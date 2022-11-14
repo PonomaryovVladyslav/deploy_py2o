@@ -24,6 +24,8 @@ class UserCreateForm(UserCreationForm):
 
 
 class PurchaseCreateForm(forms.ModelForm):
+    quantity = forms.IntegerField(initial=1, widget=forms.NumberInput(attrs={'min': 1}))
+
     class Meta:
         model = Purchase
         fields = ['quantity']

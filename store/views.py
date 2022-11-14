@@ -1,6 +1,5 @@
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
@@ -35,7 +34,7 @@ class UserCreateView(CreateView):
 class ProductListView(ListView):
     model = Product
     template_name = 'store/home.html'
-    extra_context = {'form': PurchaseCreateForm(initial={'quantity': 1})}
+    extra_context = {'form': PurchaseCreateForm}
 
 
 class ProductCreateView(SuperuserRequiredMixin, CreateView):
@@ -77,7 +76,7 @@ class PurchaseCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
-        product_id = self.request.POST.get('_product')
+        product_id = self.kwargs.get('pk')
         obj.product = Product.objects.get(id=product_id)
         obj.customer = self.request.user
         obj.save()
@@ -106,7 +105,7 @@ class ReturnCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
-        purchase_id = self.request.POST.get('_purchase')
+        purchase_id = self.kwargs.get('pk')
         obj.purchase = Purchase.objects.get(id=purchase_id)
         obj.save()
         return super().form_valid(form)
@@ -120,4 +119,3 @@ class ReturnDeleteView(SuperuserRequiredMixin, DeleteView):
 class PurchaseDeleteView(SuperuserRequiredMixin, DeleteView):
     model = Purchase
     success_url = reverse_lazy('returns')
-
