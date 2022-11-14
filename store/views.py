@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 
 from store.forms import UserCreateForm, PurchaseCreateForm, ReturnCreateForm
-from store.models import Product, Purchase, ReturnPurchase
+from store.models import Product, Purchase, ReturnPurchase, MyUser
 
 
 class SuperuserRequiredMixin(UserPassesTestMixin):
@@ -86,6 +86,9 @@ class PurchaseCreateView(LoginRequiredMixin, CreateView):
             messages.error(self.request, 'Not enough goods in stock')
             return HttpResponseRedirect('/')
         purchase_amount = product.price * ordered_quantity
+        if purchase_amount > self.request.user.deposit:
+            messages.error(self.request, 'Not enough funds to make a purchase')
+            return HttpResponseRedirect('/')
         # ---------------------------------------------------------------------------------------
         obj.product = product
         obj.customer = self.request.user
