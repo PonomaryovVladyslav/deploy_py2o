@@ -1,6 +1,9 @@
 {% extends 'store/base.html' %}
 
 {% block content %}
+    {% for message in messages %}
+        {{ message }}
+    {% endfor %}
     {% for product in object_list %}
         <div class="product">
             <h3>{{ product.title }}</h3>
@@ -17,6 +20,9 @@
                         {{ form.as_p }}
                         <button type="submit" ><span>Buy now</span></button>
                     </form>
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
                 {% endif %}
             {% endif %}
         </div>

@@ -1,5 +1,7 @@
+from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
@@ -77,7 +79,15 @@ class PurchaseCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         obj = form.save(commit=False)
         product_id = self.kwargs.get('pk')
-        obj.product = Product.objects.get(id=product_id)
+        product = Product.objects.get(id=product_id)
+        ordered_quantity = int(self.request.POST['quantity'])
+        stock_quantity = product.quantity
+        if ordered_quantity > stock_quantity:
+            messages.error(self.request, 'Not enough goods in stock')
+            return HttpResponseRedirect('/')
+        purchase_amount = product.price * ordered_quantity
+        # ---------------------------------------------------------------------------------------
+        obj.product = product
         obj.customer = self.request.user
         obj.save()
         return super().form_valid(form)
