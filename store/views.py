@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db import transaction
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
@@ -139,3 +139,16 @@ class ReturnDeleteView(SuperuserRequiredMixin, DeleteView):
 class PurchaseDeleteView(SuperuserRequiredMixin, DeleteView):
     model = Purchase
     success_url = reverse_lazy('returns')
+
+    def form_valid(self, form):
+        purchase = self.get_object()
+        customer = purchase.customer
+        product = purchase.product
+        customer.deposit += purchase.purchase_amount()
+        product.quantity += purchase.quantity
+
+        with transaction.atomic():
+            customer.save()
+            product.save()
+            purchase.delete()
+        return HttpResponseRedirect(self.success_url)
