@@ -39,6 +39,17 @@ body {
     padding: 5px;
 }
 
+.message {
+    width: 83%;
+    padding: 20px;
+    font-family: Play, sans-serif;
+    font-size: 22px;
+    font-weight: bold;
+    color: #c54c4c;
+    box-shadow: 0 0 10px #c54c4c;
+    border-radius: 5px;
+}
+
 .product {
     display: flex;
     flex-wrap: wrap;
@@ -61,6 +72,7 @@ body {
 }
 
 .product > img {
+    border-radius: 10px;
     width: 90%;
 }
 
