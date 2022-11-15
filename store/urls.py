@@ -1,8 +1,6 @@
 from django.contrib.auth import views
-from django.urls import path, reverse_lazy
-from django.views.generic import DeleteView
+from django.urls import path
 
-from store.models import ReturnPurchase
 from store.views import UserCreateView, ProductCreateView, ProductUpdateView,\
     PurchaseCreateView, ProductListView, PurchaseListView, ReturnCreateView, \
     ReturnListView, ReturnDeleteView, PurchaseDeleteView

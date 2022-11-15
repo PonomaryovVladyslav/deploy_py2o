@@ -235,6 +235,21 @@ body {
     border: none;
 }
 
+.pagination {
+    width: 80%;
+    margin: 25px 0 25px 0;
+    font-family: Play, sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    color: #ffff;
+    text-shadow: 0 0 2px #000000;
+}
+
+.pagination > span > a {
+    text-decoration: none;
+    color: #ffff;
+}
+
 .return {
     box-shadow: 0 0 5px #2068b7;
     background: #ffff;

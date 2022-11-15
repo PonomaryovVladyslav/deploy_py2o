@@ -2,7 +2,7 @@
 
 {% block content %}
     {% for message in messages %}
-        <div class="message"><slug>{{ message }}</slug></div>
+        <div class="message"><span>{{ message }}</span></div>
     {% endfor %}
     {% for product in object_list %}
         <div class="product">
@@ -25,4 +25,5 @@
         </div>
         <br>
     {% endfor %}
+    {% include 'includes/pagination.html' %}
 {% endblock %}

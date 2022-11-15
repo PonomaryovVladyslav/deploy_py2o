@@ -5,10 +5,11 @@ from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 
 from store.forms import UserCreateForm, PurchaseCreateForm, ReturnCreateForm
-from store.models import Product, Purchase, ReturnPurchase, MyUser
+from store.models import Product, Purchase, ReturnPurchase
 
 
 class SuperuserRequiredMixin(UserPassesTestMixin):
@@ -38,6 +39,7 @@ class ProductListView(ListView):
     model = Product
     template_name = 'store/home.html'
     extra_context = {'form': PurchaseCreateForm}
+    paginate_by = 3
 
 
 class ProductCreateView(SuperuserRequiredMixin, CreateView):
@@ -59,6 +61,7 @@ class PurchaseListView(LoginRequiredMixin, ListView):
     model = Purchase
     template_name = 'store/purchase.html'
     extra_context = {'form': ReturnCreateForm}
+    paginate_by = 4
 
     def get_queryset(self):
         if not self.request.user.is_superuser:
@@ -107,6 +110,7 @@ class ReturnListView(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('login')
     model = ReturnPurchase
     template_name = 'store/return_purchase.html'
+    paginate_by = 4
 
     def get_queryset(self):
         if not self.request.user.is_superuser:
@@ -126,7 +130,12 @@ class ReturnCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         obj = form.save(commit=False)
         purchase_id = self.kwargs.get('pk')
-        obj.purchase = Purchase.objects.get(id=purchase_id)
+        purchase = Purchase.objects.get(id=purchase_id)
+        check_time_period = timezone.now() - purchase.date
+        if check_time_period.seconds > 180:
+            messages.error(self.request, 'Return time has expired')
+            return HttpResponseRedirect('/purchases')
+        obj.purchase = purchase
         obj.save()
         return super().form_valid(form)
 
