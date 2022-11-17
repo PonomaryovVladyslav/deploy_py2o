@@ -42,13 +42,14 @@ class ProductListView(ListView):
     paginate_by = 3
 
     def get(self, request, *args, **kwargs):
-        if request.session.get('page_visit', False):
-            request.session['page_visit'] += 1
-        else:
-            request.session['page_visit'] = 1
-        if request.session.get('page_visit') == 4:
-            request.session['page_visit'] = 0
-            messages.info(self.request, 'This is your 4th visit to the page')
+        if request.user.is_authenticated and not request.user.is_superuser:
+            if request.session.get('page_visit', False):
+                request.session['page_visit'] += 1
+            else:
+                request.session['page_visit'] = 1
+            if request.session.get('page_visit') == 4:
+                request.session['page_visit'] = 0
+                messages.info(self.request, 'This is your 4th visit to the page')
         return super(ProductListView, self).get(request, *args, **kwargs)
 
 
