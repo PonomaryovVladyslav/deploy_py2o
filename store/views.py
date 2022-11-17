@@ -8,6 +8,7 @@ from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 
+from MySite.settings import RETURN_TIME_LIMIT
 from store.forms import UserCreateForm, PurchaseCreateForm, ReturnCreateForm
 from store.models import Product, Purchase, ReturnPurchase
 
@@ -139,7 +140,7 @@ class ReturnCreateView(LoginRequiredMixin, CreateView):
         purchase_id = self.kwargs.get('pk')
         purchase = Purchase.objects.get(id=purchase_id)
         check_time_period = timezone.now() - purchase.date
-        if check_time_period.seconds > 180:
+        if check_time_period.seconds > RETURN_TIME_LIMIT:
             messages.error(self.request, 'Return time has expired')
             return HttpResponseRedirect('/purchases')
         obj.purchase = purchase
