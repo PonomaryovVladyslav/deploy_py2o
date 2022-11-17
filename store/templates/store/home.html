@@ -2,7 +2,11 @@
 
 {% block content %}
     {% for message in messages %}
-        <div class="message"><span>{{ message }}</span></div>
+        {% if message.tags == 'error' %}
+            <div class="message error_message"><span>{{ message }} {{ message.tags }}</span></div>
+        {% elif message.tags == 'info' %}
+            <div class="message info_message"><span>{{ message }} {{ message.tags }}</span></div>
+        {% endif %}
     {% endfor %}
     {% for product in object_list %}
         <div class="product">

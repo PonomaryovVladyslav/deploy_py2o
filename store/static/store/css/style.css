@@ -45,9 +45,17 @@ body {
     font-family: Play, sans-serif;
     font-size: 22px;
     font-weight: bold;
+    border-radius: 5px;
+}
+
+.error_message {
     color: #c54c4c;
     box-shadow: 0 0 10px #c54c4c;
-    border-radius: 5px;
+}
+
+.info_message {
+    color: #1d70b2;
+    box-shadow: 0 0 10px #1d70b2;
 }
 
 .product {
