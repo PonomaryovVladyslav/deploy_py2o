@@ -36,6 +36,7 @@ class Purchase(models.Model):
     def __str__(self):
         return f'{self.product}'
 
+    @property
     def purchase_amount(self):
         return self.quantity * self.product.price
 

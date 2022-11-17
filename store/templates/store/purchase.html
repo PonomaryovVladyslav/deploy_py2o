@@ -15,11 +15,15 @@
                 <span>Purchase ID: {{ purchase.id }}</span>
                 <span>Customer: {{ purchase.customer }}</span>
             {% else %}
+                {% if not purchase.returnpurchase %}
                 <form action="{% url 'add_return' purchase.id %}" method="post">
                     {% csrf_token %}
                     {{ form.as_p }}
                     <button class="return" type="submit" ><span>Return</span></button>
                 </form>
+                    {% else %}
+                    <h3>REFUND REQUEST MADE</h3>
+                {% endif %}
             {% endif %}
         </div>
     {% endfor %}
