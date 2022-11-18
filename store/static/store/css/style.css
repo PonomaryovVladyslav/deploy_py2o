@@ -41,6 +41,7 @@ body {
 
 .message {
     width: 83%;
+    margin: 10px 0 10px 0;
     padding: 20px;
     font-family: Play, sans-serif;
     font-size: 22px;
