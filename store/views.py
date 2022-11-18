@@ -8,7 +8,7 @@ from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 
-from MySite.settings import RETURN_TIME_LIMIT
+from config.settings import RETURN_TIME_LIMIT
 from store.forms import UserCreateForm, PurchaseCreateForm, ReturnCreateForm
 from store.models import Product, Purchase, ReturnPurchase
 
