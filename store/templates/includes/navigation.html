@@ -1,0 +1,21 @@
+<div class="navi">
+<a href="{% url 'home' %}">Home</a>
+{% if not user.is_authenticated %}
+    <a href="{% url 'login' %}">Log in</a>
+    <a href="{% url 'register' %}">Sign up</a>
+{% else %}
+    {% if user.is_superuser %}
+        <a href="{% url 'add_product' %}">Add Products</a>
+        <a href="{% url 'purchases' %}">All Purchases</a>
+        <a href="{% url 'returns' %}">All Returns</a>
+        <a href="{% url 'logout' %}">log out</a>
+        <p>ADMIN</p>
+    {% else %}
+        <a href="{% url 'purchases' %}">My Purchases</a>
+        <a href="{% url 'returns' %}">My Returns</a>
+        <a href="{% url 'logout' %}">log out</a>
+        <p>{{ user.email }}</p>
+        <p>Deposit {{ user.deposit }} $</p>
+    {% endif %}
+{% endif %}
+</div>

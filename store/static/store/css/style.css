@@ -1,0 +1,290 @@
+body {
+    margin: 0;
+}
+
+.main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+}
+
+.navi {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #103c28;
+    color: #ffff;
+    font-family: Play, sans-serif;
+    font-size: 18px;
+    width: 100%;
+    height: 22%;
+    margin: 0 0 20px 0;
+}
+
+.navi > a {
+    color: #ffff;
+    text-decoration: none;
+    width: 10%;
+    margin: 10px;
+    padding: 5px;
+}
+
+.navi > a:hover{
+        font-size: 20px;
+}
+
+.navi > p {
+    font-size: 14px;
+    padding: 5px;
+}
+
+.message {
+    width: 83%;
+    margin: 10px 0 10px 0;
+    padding: 20px;
+    font-family: Play, sans-serif;
+    font-size: 22px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.error_message {
+    color: #c54c4c;
+    box-shadow: 0 0 10px #c54c4c;
+}
+
+.info_message {
+    color: #1d70b2;
+    box-shadow: 0 0 10px #1d70b2;
+}
+
+.product {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background: #effff5;
+    margin: 20px;
+    padding: 15px;
+    width: 25%;
+    box-shadow: 0 0 10px #4c4c4f;
+    border-radius: 5px;
+    font-family: Play, sans-serif;
+}
+
+.product:hover {
+    box-shadow: 0 0 20px #4c4c4f;
+}
+
+.product > h3 {
+    width: 100%;
+}
+
+.product > img {
+    border-radius: 10px;
+    width: 90%;
+}
+
+.product > p {
+    width: 50%;
+    text-align: start;
+    padding: 5px;
+    margin: 10px;
+}
+
+.product > form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+}
+
+.product > form > p > input{
+    width: 30%;
+}
+
+.product > form > button > span {
+    font-family: Play, sans-serif;
+    font-weight: bold;
+}
+
+.product > form > button {
+    width: 30%;
+    height: 30px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background: #ffff;
+    box-shadow: 0 0 5px #179f63;
+}
+
+.product > form > button:hover {
+    background: #179f63;
+    color: #ffff;
+}
+
+.product > a {
+    width: 100%;
+    margin: 10px;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 22px;
+    color: #000000;
+    box-shadow: 0 0 5px #4c4c4f;
+    border-radius: 5px;
+    background: #ffff;
+}
+
+.product > a:hover {
+    color: #ffff;
+    box-shadow: 0 0 5px #179f63;
+    background: #179f63;
+}
+
+.main .main_form {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    width: 50%;
+    font-family: Play, sans-serif;
+    margin: 30px 0 0 0;
+    padding: 10px;
+    box-shadow: 0 0 5px #4c4c4f;
+    border-radius: 5px;
+    background: #effff5;
+}
+
+.main .main_form > h2 {
+    margin: 10px 0 10px 0;
+}
+
+.main .main_form > form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main .main_form > form > p{
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+}
+
+.main .main_form > form > p > input {
+    width: 70%;
+    height: 20px;
+}
+
+.main .main_form > form > p > label {
+    width: 20%;
+}
+
+.main .main_form > form > button {
+    width: 20%;
+    height: 30px;
+    margin: 10px;
+    border: none;
+    box-shadow: 0 0 5px #103c28;
+    border-radius: 5px;
+    background: #ffff;
+    font-size: 18px;
+    font-family: Play, sans-serif;
+}
+
+.main .main_form > form > button:hover {
+    background: #179f63;
+    color: #ffff;
+    box-shadow: 0 0 5px #179f63;
+}
+
+.main .list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 50%;
+    font-family: Play, sans-serif;
+    box-shadow: 0 0 5px #4c4c4f;
+    border-radius: 5px;
+    background: #effff5;
+    margin: 30px 0 30px 0;
+    padding: 10px;
+}
+
+.main .list > h2 {
+    width: 100%;
+}
+
+.main .list > div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    width: 80%;
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 0 0 2px #4c4c4f;
+    border-radius: 5px;
+    background: #ffff;
+}
+
+.main .list > div > span {
+    width: 100%;
+    margin: 5px;
+}
+
+.main .list > div > form > button {
+    font-family: Play, sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    width: 200px;
+    height: 30px;
+    margin: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+.pagination {
+    width: 80%;
+    margin: 25px 0 25px 0;
+    font-family: Play, sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    color: #ffff;
+    text-shadow: 0 0 2px #000000;
+}
+
+.pagination > span > a {
+    text-decoration: none;
+    color: #ffff;
+}
+
+.return {
+    box-shadow: 0 0 5px #2068b7;
+    background: #ffff;
+}
+
+.return:hover {
+    background: #2068b7;
+    color: #ffff;
+}
+
+.confirm {
+    box-shadow: 0 0 5px #179f63;
+    background: #ffff;
+}
+
+.confirm:hover {
+    background: #179f63;
+    color: #ffff;
+}
+
+.reject {
+    box-shadow: 0 0 5px #c54c4c;
+    background: #ffff;
+}
+
+.reject:hover {
+    background: #c54c4c;
+    color: #ffff;
+}
