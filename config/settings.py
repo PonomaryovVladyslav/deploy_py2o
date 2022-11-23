@@ -47,6 +47,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'store.middlewares.AutoLogout',
     'store.middlewares.CheckUserVisit',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -134,7 +135,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-RETURN_TIME_LIMIT = 180
+RETURN_TIME_LIMIT = 60 * 3
+
+INACTIVITY_TIME_LIMIT = 60 * 15
 
 CACHES = {
     "default": {

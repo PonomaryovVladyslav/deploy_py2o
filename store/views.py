@@ -23,7 +23,6 @@ class SuperuserRequiredMixin(UserPassesTestMixin):
 
 
 class UserCreateView(CreateView):
-    form_class = UserCreateForm
     template_name = 'registration/registration.html'
     success_url = reverse_lazy('home')
 

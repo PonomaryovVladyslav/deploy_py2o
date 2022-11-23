@@ -1,6 +1,12 @@
+from datetime import datetime
+
 from django.contrib import messages
+from django.contrib.auth import logout
 from django.core.cache import cache
+from django.http import HttpResponseRedirect
 from django.utils.deprecation import MiddlewareMixin
+
+from config.settings import INACTIVITY_TIME_LIMIT
 
 
 class CheckUserVisit(MiddlewareMixin):
@@ -23,3 +29,16 @@ class CheckUserVisit(MiddlewareMixin):
                 cache.set('counter_cache', 0)
             else:
                 cache.set('counter_cache', counter_cache)
+
+
+class AutoLogout(MiddlewareMixin):
+
+    def process_request(self, request):
+        if request.user.is_authenticated and not request.user.is_superuser:
+            now = datetime.now()
+            last_activity_time = request.session.get('last_activity_time', now.isoformat())
+            inactivity_period = now - datetime.fromisoformat(last_activity_time)
+            if inactivity_period.seconds > INACTIVITY_TIME_LIMIT:
+                logout(request)
+                return HttpResponseRedirect('/login')
+            request.session['last_activity_time'] = now.isoformat()
