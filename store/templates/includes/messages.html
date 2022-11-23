@@ -1,0 +1,7 @@
+{% for message in messages %}
+    {% if message.tags == 'error' %}
+        <div class="message error_message"><span>{{ message }}</span></div>
+    {% elif message.tags == 'info' %}
+        <div class="message info_message"><span>{{ message }}</span></div>
+    {% endif %}
+{% endfor %}

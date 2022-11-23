@@ -1,7 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.core.cache import cache
 from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
@@ -42,24 +41,6 @@ class ProductListView(ListView):
     template_name = 'store/home.html'
     extra_context = {'form': PurchaseCreateForm}
     paginate_by = 3
-
-    def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated and not request.user.is_superuser:
-            counter_session = self.request.session.get('counter_session', 0)
-            counter_session += 1
-            if counter_session == 4:
-                messages.info(self.request, 'This is your 4th visit to the page')
-                self.request.session['counter_session'] = 0
-            else:
-                self.request.session['counter_session'] = counter_session
-            counter_cache = cache.get('counter_cache', 0)
-            counter_cache += 1
-            if counter_cache == 10:
-                messages.info(self.request, 'You are our 10th customer')
-                cache.set('counter_cache', 0)
-            else:
-                cache.set('counter_cache', counter_cache)
-        return super(ProductListView, self).get(request, *args, **kwargs)
 
 
 class ProductCreateView(SuperuserRequiredMixin, CreateView):
