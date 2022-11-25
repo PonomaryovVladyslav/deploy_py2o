@@ -6,21 +6,25 @@
             <h3>{{ product.title }}</h3>
             <img src="media/{{ product.image }}" alt="product_img">
             <p>{{ product.description }}</p>
-            <p>Price: {{ product.price }} $</p>
-            <p>Qty.: {{ product.quantity }}</p>
+            {% if product.quantity %}
+                <p>Price: {{ product.price }} $</p>
+                <p>Qty.: {{ product.quantity }}</p>
+            {% else %}
+                <p>NOT AVAILABLE</p>
+            {% endif %}
             {% if user.is_authenticated %}
                 {% if user.is_superuser %}
                     <a href="{% url 'update_product' product.id %}">Update</a>
                 {% else %}
+                    {% if  product.quantity %}
                     <form action="{% url 'add_purchase' product.id %}" method="post">
                         {% csrf_token %}
                         {{ form.as_p }}
                         <button type="submit" ><span>Buy now</span></button>
                     </form>
+                    {% endif %}
                 {% endif %}
             {% endif %}
         </div>
-        <br>
     {% endfor %}
-    {% include 'includes/pagination.html' %}
 {% endblock %}
