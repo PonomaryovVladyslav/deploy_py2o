@@ -1,5 +1,6 @@
 body {
     margin: 0;
+    height: 100vh;
 }
 
 .main {
@@ -18,7 +19,7 @@ body {
     font-family: Play, sans-serif;
     font-size: 18px;
     width: 100%;
-    height: 22%;
+    height: 60px;
     margin: 0 0 20px 0;
 }
 
@@ -62,7 +63,7 @@ body {
 .product {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-around;
     background: #effff5;
     margin: 20px;
     padding: 15px;
@@ -126,11 +127,13 @@ body {
 }
 
 .product > a {
-    width: 100%;
+    width: 55%;
+    align-self: end;
+    height: 30px;
     margin: 10px;
     padding: 5px;
     text-decoration: none;
-    font-size: 22px;
+    font-size: 20px;
     color: #000000;
     box-shadow: 0 0 5px #4c4c4f;
     border-radius: 5px;
@@ -287,4 +290,16 @@ body {
 .reject:hover {
     background: #c54c4c;
     color: #ffff;
+}
+
+.footer {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    width: 98%;
+    text-align: right;
+    font-family: Caveat, sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    color: #103c28;
 }
