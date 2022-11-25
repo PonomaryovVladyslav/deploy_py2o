@@ -7,6 +7,7 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     text-align: center;
+    color: #103c28;
 }
 
 .navi {
@@ -18,8 +19,8 @@ body {
     font-family: Play, sans-serif;
     font-size: 18px;
     width: 100%;
-    height: 60px;
-    margin: 0 0 20px 0;
+    height: 50px;
+    margin: 0 0 15px 0;
 }
 
 .navi > a {
@@ -41,11 +42,11 @@ body {
 
 .message {
     width: 80%;
-    height: 30px;
-    margin: 10px 380px 10px 380px;
+    height: 25px;
+    margin: 10px 450px 10px 450px;
     padding: 10px;
     font-family: Play, sans-serif;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: bold;
     border-radius: 5px;
 }
@@ -68,13 +69,13 @@ body {
     margin: 20px;
     padding: 15px;
     width: 25%;
-    box-shadow: 0 0 10px #4c4c4f;
+    box-shadow: 0 0 5px #4c4c4f;
     border-radius: 5px;
     font-family: Play, sans-serif;
 }
 
 .product:hover {
-    box-shadow: 0 0 20px #4c4c4f;
+    box-shadow: 0 0 15px #103c28;
 }
 
 .product > h3 {
@@ -150,7 +151,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    width: 50%;
+    width: 40%;
     font-family: Play, sans-serif;
     margin: 30px 0 0 0;
     padding: 10px;
@@ -186,7 +187,7 @@ body {
 }
 
 .main .main_form > form > p > textarea {
-    max-width: 70%;
+    width: 60%;
 }
 
 .main .main_form > form > button {
@@ -211,17 +212,18 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    width: 50%;
+    width: 40%;
     font-family: Play, sans-serif;
     box-shadow: 0 0 5px #4c4c4f;
     border-radius: 5px;
     background: #effff5;
-    margin: 30px 0 30px 0;
+    margin: 15px 0 15px 0;
     padding: 10px;
 }
 
 .main .list > h2 {
     width: 100%;
+    margin: 10px 0 10px 0;
 }
 
 .main .list > div {
@@ -239,6 +241,12 @@ body {
 .main .list > div > span {
     width: 100%;
     margin: 5px;
+}
+
+.main .list > div > h3 {
+    width: 100%;
+    margin: 10px;
+    color: #1d70b2;
 }
 
 .main .list > div > form > button {
