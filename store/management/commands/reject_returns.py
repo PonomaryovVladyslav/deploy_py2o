@@ -6,4 +6,9 @@ from store.models import ReturnPurchase
 class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
-        ReturnPurchase.objects.all().delete()
+        returns = ReturnPurchase.objects.all()
+        if returns:
+            returns.delete()
+            self.stdout.write('All return requests have been deleted')
+        else:
+            self.stdout.write('Return requests not found')
