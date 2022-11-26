@@ -62,7 +62,7 @@ class PurchaseListView(LoginRequiredMixin, ListView):
     model = Purchase
     template_name = 'store/purchase.html'
     extra_context = {'form': ReturnCreateForm}
-    paginate_by = 4
+    paginate_by = 3
 
     def get_queryset(self):
         if not self.request.user.is_superuser:
@@ -108,7 +108,7 @@ class ReturnListView(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('login')
     model = ReturnPurchase
     template_name = 'store/return_purchase.html'
-    paginate_by = 4
+    paginate_by = 3
 
     def get_queryset(self):
         if not self.request.user.is_superuser:

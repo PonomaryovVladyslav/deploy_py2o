@@ -7,6 +7,7 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     text-align: center;
+    color: #103c28;
 }
 
 .navi {
@@ -18,8 +19,8 @@ body {
     font-family: Play, sans-serif;
     font-size: 18px;
     width: 100%;
-    height: 22%;
-    margin: 0 0 20px 0;
+    height: 50px;
+    margin: 0 0 15px 0;
 }
 
 .navi > a {
@@ -40,11 +41,12 @@ body {
 }
 
 .message {
-    width: 83%;
+    width: 80%;
+    height: 25px;
     margin: 10px 0 10px 0;
-    padding: 20px;
+    padding: 10px;
     font-family: Play, sans-serif;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: bold;
     border-radius: 5px;
 }
@@ -62,18 +64,18 @@ body {
 .product {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-around;
     background: #effff5;
     margin: 20px;
     padding: 15px;
     width: 25%;
-    box-shadow: 0 0 10px #4c4c4f;
+    box-shadow: 0 0 5px #4c4c4f;
     border-radius: 5px;
     font-family: Play, sans-serif;
 }
 
 .product:hover {
-    box-shadow: 0 0 20px #4c4c4f;
+    box-shadow: 0 0 15px #103c28;
 }
 
 .product > h3 {
@@ -126,11 +128,13 @@ body {
 }
 
 .product > a {
-    width: 100%;
+    width: 55%;
+    align-self: end;
+    height: 30px;
     margin: 10px;
     padding: 5px;
     text-decoration: none;
-    font-size: 22px;
+    font-size: 20px;
     color: #000000;
     box-shadow: 0 0 5px #4c4c4f;
     border-radius: 5px;
@@ -147,7 +151,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    width: 50%;
+    width: 40%;
     font-family: Play, sans-serif;
     margin: 30px 0 0 0;
     padding: 10px;
@@ -169,16 +173,21 @@ body {
 .main .main_form > form > p{
     display: flex;
     justify-content: space-between;
-    width: 50%;
+    width: 70%;
 }
 
 .main .main_form > form > p > input {
-    width: 70%;
-    height: 20px;
+    width: 60%;
+    height: 22px;
 }
 
 .main .main_form > form > p > label {
-    width: 20%;
+    width: 30%;
+    text-align: end;
+}
+
+.main .main_form > form > p > textarea {
+    width: 60%;
 }
 
 .main .main_form > form > button {
@@ -203,17 +212,18 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    width: 50%;
+    width: 40%;
     font-family: Play, sans-serif;
     box-shadow: 0 0 5px #4c4c4f;
     border-radius: 5px;
     background: #effff5;
-    margin: 30px 0 30px 0;
+    margin: 15px 0 15px 0;
     padding: 10px;
 }
 
 .main .list > h2 {
     width: 100%;
+    margin: 10px 0 10px 0;
 }
 
 .main .list > div {
@@ -233,6 +243,12 @@ body {
     margin: 5px;
 }
 
+.main .list > div > h3 {
+    width: 100%;
+    margin: 10px;
+    color: #1d70b2;
+}
+
 .main .list > div > form > button {
     font-family: Play, sans-serif;
     font-weight: bold;
@@ -245,18 +261,35 @@ body {
 }
 
 .pagination {
-    width: 80%;
-    margin: 25px 0 25px 0;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    position: absolute;
+    bottom: 35px;
+    margin: 10px 0 10px 0;
     font-family: Play, sans-serif;
-    font-weight: bold;
     font-size: 20px;
-    color: #ffff;
-    text-shadow: 0 0 2px #000000;
 }
 
-.pagination > span > a {
+.pagination > a {
+    width: 32px;
+    height: 32px;
+    margin: 0 5px 0 5px;
     text-decoration: none;
+    text-align: center;
+    line-height: 32px;
+    border-radius: 20px;
+    box-shadow: 0 0 5px #103c28;
+}
+
+.pagination .current {
     color: #ffff;
+    background: #103c28;
+}
+
+.pagination .not_current {
+    color: #103c28;
+    border-radius: 20px;
 }
 
 .return {
@@ -287,4 +320,18 @@ body {
 .reject:hover {
     background: #c54c4c;
     color: #ffff;
+}
+
+.footer {
+    position: absolute;
+    bottom: 10px;
+    right: 50px;
+    font-family: Caveat, sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    color: #103c28;
+}
+
+.footer > p {
+    margin: 0;
 }
