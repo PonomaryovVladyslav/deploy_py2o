@@ -150,7 +150,7 @@ class PurchaseDeleteView(SuperuserRequiredMixin, DeleteView):
         purchase = self.get_object()
         customer = purchase.customer
         product = purchase.product
-        customer.deposit += purchase.purchase_amount()
+        customer.deposit += purchase.purchase_amount
         product.quantity += purchase.quantity
 
         with transaction.atomic():
