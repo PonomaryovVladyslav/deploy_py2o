@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'store.apps.StoreConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -148,4 +149,10 @@ CACHES = {
         },
         "KEY_PREFIX": "example"
     }
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
 }
