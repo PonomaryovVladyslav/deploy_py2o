@@ -60,3 +60,7 @@ class PurchaseGetSerializer(serializers.ModelSerializer):
 
     def get_product_title(self, obj):
         return f'{obj.product.title} {obj.product.description}'
+
+
+class TestSerializer(serializers.ModelSerializer):
+    pass
