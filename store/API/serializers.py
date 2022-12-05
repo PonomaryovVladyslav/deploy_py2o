@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from store.models import Product, Purchase, MyUser
+from store.models import Product, Purchase, MyUser, ReturnPurchase
 
 
 class UserPurchaseSerializer(serializers.ModelSerializer):
@@ -17,7 +17,7 @@ class UserPurchaseSerializer(serializers.ModelSerializer):
 class MyUserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
-    purchases = UserPurchaseSerializer(many=True)
+    purchases = UserPurchaseSerializer(many=True, read_only=True)
 
     class Meta:
         model = MyUser
@@ -38,12 +38,13 @@ class MyUserSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Product
-        fields = ('title', 'description', 'price', 'quantity')
+        fields = ('id', 'title', 'description', 'price', 'quantity')
 
 
-class PurchaseCreateSerializer(serializers.ModelSerializer):
+class PurchaseCreateUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Purchase
@@ -56,11 +57,14 @@ class PurchaseGetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Purchase
-        fields = ('product', 'quantity', 'purchase_amount', 'date', 'customer')
+        fields = ('id', 'product', 'quantity', 'purchase_amount', 'date', 'customer')
 
     def get_product_title(self, obj):
         return f'{obj.product.title} {obj.product.description}'
 
 
-class TestSerializer(serializers.ModelSerializer):
-    pass
+class ReturnPurchaseSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ReturnPurchase
+        fields = ('id', 'purchase', 'date')
