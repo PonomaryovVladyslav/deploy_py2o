@@ -4,14 +4,25 @@ from store.models import Product, Purchase, MyUser, ReturnPurchase
 
 
 class UserPurchaseSerializer(serializers.ModelSerializer):
-    product = serializers.SerializerMethodField(method_name='get_product_title')
+    product = serializers.SerializerMethodField(method_name='get_full_product_title')
 
     class Meta:
         model = Purchase
         fields = ('product', 'quantity', 'purchase_amount', 'date')
 
-    def get_product_title(self, obj):
+    def get_full_product_title(self, obj):
         return f'{obj.product.title} {obj.product.description}'
+
+
+class UserProductSerializer(serializers.ModelSerializer):
+    products = serializers.SlugRelatedField(source='purchases',
+                                            slug_field='product_id',
+                                            read_only=True,
+                                            many=True,)
+
+    class Meta:
+        model = MyUser
+        fields = ('id', 'username', 'products')
 
 
 class MyUserSerializer(serializers.ModelSerializer):
@@ -53,13 +64,13 @@ class PurchaseCreateUpdateSerializer(serializers.ModelSerializer):
 
 class PurchaseGetSerializer(serializers.ModelSerializer):
     customer = MyUserSerializer()
-    product = serializers.SerializerMethodField(method_name='get_product_title')
+    product = serializers.SerializerMethodField(method_name='get_full_product_title')
 
     class Meta:
         model = Purchase
         fields = ('id', 'product', 'quantity', 'purchase_amount', 'date', 'customer')
 
-    def get_product_title(self, obj):
+    def get_full_product_title(self, obj):
         return f'{obj.product.title} {obj.product.description}'
 
 
