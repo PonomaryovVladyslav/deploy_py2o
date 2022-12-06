@@ -1,9 +1,18 @@
 from django.contrib.auth import views
-from django.urls import path
+from django.urls import path, include
+from rest_framework import routers
 
+from store.API.resourses import UserViewSet, ProductViewSet, PurchaseViewSet, ReturnPurchaseViewSet
 from store.views import UserCreateView, ProductCreateView, ProductUpdateView,\
     PurchaseCreateView, ProductListView, PurchaseListView, ReturnCreateView, \
     ReturnListView, ReturnDeleteView, PurchaseDeleteView
+
+
+router = routers.SimpleRouter()
+router.register(r'customer', UserViewSet, basename='user')
+router.register(r'product', ProductViewSet)
+router.register(r'purchase', PurchaseViewSet, basename='purchase')
+router.register(r'return', ReturnPurchaseViewSet)
 
 urlpatterns = [
     path('', ProductListView.as_view(), name='home'),
@@ -18,4 +27,6 @@ urlpatterns = [
     path('returns/', ReturnListView.as_view(), name='returns'),
     path('delete-return/<int:pk>', ReturnDeleteView.as_view(), name='delete_return'),
     path('delete-purchase/<int:pk>', PurchaseDeleteView.as_view(), name='delete_purchase'),
+
+    path('api/', include(router.urls)),
 ]

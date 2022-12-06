@@ -23,7 +23,7 @@ class Product(models.Model):
 
 
 class Purchase(models.Model):
-    customer = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    customer = models.ForeignKey(MyUser, related_name='purchases', on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveSmallIntegerField()
     date = models.DateTimeField(auto_now_add=True)
