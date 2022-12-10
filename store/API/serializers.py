@@ -46,12 +46,29 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'description', 'price', 'quantity']
 
 
-class PurchaseCreateUpdateSerializer(serializers.ModelSerializer):
+class PurchaseCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Purchase
         fields = ['customer', 'product', 'quantity']
         read_only_fields = ['customer']
+
+    def validate(self, data):
+        product = data.get('product')
+        quantity = data.get('quantity')
+
+        if quantity < 1:
+            raise serializers.ValidationError({'quantity': 'Quantity must be greater than zero.'})
+
+        if product.quantity < quantity:
+            raise serializers.ValidationError({'quantity': 'Not enough goods in stock.'})
+
+        customer_deposit = self.context.get('request').user.deposit
+
+        if product.price * quantity > customer_deposit:
+            raise serializers.ValidationError({'quantity': 'Not enough funds to make a purchase.'})
+
+        return data
 
 
 class PurchaseGetSerializer(serializers.ModelSerializer):
@@ -82,6 +99,7 @@ class ReturnPurchaseSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError('You dont have a purchase to return.')
 
         check_time_period = timezone.now() - purchase.date
+
         if check_time_period.seconds > RETURN_TIME_LIMIT:
             raise serializers.ValidationError('Return time has expired.')
 

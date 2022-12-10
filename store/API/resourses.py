@@ -1,3 +1,4 @@
+from django.db import transaction
 from rest_framework import viewsets, permissions
 from rest_framework.filters import OrderingFilter
 
@@ -5,7 +6,7 @@ from store.API.filters import CustomerPurchaseFilter, PurchaseProductPriceFilter
     CustomerReturnsFilter
 from store.API.permissions import IsAdminOrReadOnly, IsAuthenticatedReadAndCreate
 from store.API.serializers import ProductSerializer, PurchaseGetSerializer, MyUserSerializer, \
-    ReturnPurchaseSerializer, PurchaseCreateUpdateSerializer
+    ReturnPurchaseSerializer, PurchaseCreateSerializer
 from store.models import Product, Purchase, MyUser, ReturnPurchase
 
 
@@ -23,10 +24,6 @@ class ProductViewSet(viewsets.ModelViewSet):
     ordering_fields = ['title', 'price', 'quantity']
     permission_classes = [IsAdminOrReadOnly]
 
-    def perform_create(self, serializer):
-        title = serializer.validated_data['title'] + " !"
-        serializer.save(title=title)
-
 
 class PurchaseViewSet(viewsets.ModelViewSet):
     queryset = Purchase.objects.all()
@@ -37,10 +34,20 @@ class PurchaseViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.request.method.lower() == 'get':
             return PurchaseGetSerializer
-        return PurchaseCreateUpdateSerializer
+        return PurchaseCreateSerializer
 
     def perform_create(self, serializer):
-        serializer.save(customer=self.request.user)
+        customer = self.request.user
+        product = serializer.validated_data.get('product')
+        quantity = serializer.validated_data.get('quantity')
+
+        product.quantity -= quantity
+        customer.deposit -= product.price * quantity
+
+        with transaction.atomic():
+            product.save()
+            customer.save()
+            serializer.save(customer=customer)
 
 
 class ReturnPurchaseViewSet(viewsets.ModelViewSet):
