@@ -116,10 +116,12 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
+        'store.API.authentication.CustomBasicAuthentication',
+        'store.API.authentication.CustomTokenAuthentication',
     ]
 }
+
+TOKEN_GENERATE_LINK = 'http://127.0.0.1:8000/api/get-auth-token/'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
@@ -151,6 +153,8 @@ RETURN_TIME_LIMIT = 60 * 3
 
 INACTIVITY_TIME_LIMIT = 60 * 15
 
+TOKEN_LIFE_TIME_LIMIT = 60 * 10
+
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
@@ -160,10 +164,4 @@ CACHES = {
         },
         "KEY_PREFIX": "example"
     }
-}
-
-REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.JSONRenderer',
-    )
 }

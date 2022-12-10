@@ -3,6 +3,7 @@ from django.urls import path, include
 from rest_framework import routers
 
 from store.API.resourses import UserViewSet, ProductViewSet, PurchaseViewSet, ReturnPurchaseViewSet
+from store.API.views import CustomAuthToken
 from store.views import UserCreateView, ProductCreateView, ProductUpdateView,\
     PurchaseCreateView, ProductListView, PurchaseListView, ReturnCreateView, \
     ReturnListView, ReturnDeleteView, PurchaseDeleteView
@@ -29,4 +30,5 @@ urlpatterns = [
     path('delete-purchase/<int:pk>', PurchaseDeleteView.as_view(), name='delete_purchase'),
 
     path('api/', include(router.urls)),
+    path('api/get-auth-token/', CustomAuthToken.as_view())
 ]
