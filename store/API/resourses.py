@@ -59,12 +59,7 @@ class ReturnPurchaseViewSet(viewsets.ModelViewSet):
     filter_backends = [CustomerReturnsFilter]
     permission_classes = [IsAuthenticatedReadAndCreate]
 
-    @action(detail=True)
-    def reject_return(self, request, pk=None):
-        super().destroy(self, request, pk=pk)
-        return Response({'status': 'return rejected'})
-
-    @action(detail=True)
+    @action(detail=True, methods=['post'])
     def approve_return(self, request, pk=None):
         purchase = get_object_or_404(Purchase, returnpurchase=pk)
         customer = purchase.customer
