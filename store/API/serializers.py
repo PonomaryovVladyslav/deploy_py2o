@@ -1,5 +1,7 @@
+from django.utils import timezone
 from rest_framework import serializers
 
+from config.settings import RETURN_TIME_LIMIT
 from store.models import Product, Purchase, MyUser, ReturnPurchase
 
 
@@ -8,21 +10,10 @@ class UserPurchaseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Purchase
-        fields = ('product', 'quantity', 'purchase_amount', 'date')
+        fields = ['product', 'quantity', 'purchase_amount', 'date']
 
     def get_full_product_title(self, obj):
         return f'{obj.product.title} {obj.product.description}'
-
-
-class UserProductSerializer(serializers.ModelSerializer):
-    products = serializers.SlugRelatedField(source='purchases',
-                                            slug_field='product_id',
-                                            read_only=True,
-                                            many=True,)
-
-    class Meta:
-        model = MyUser
-        fields = ('id', 'username', 'products')
 
 
 class MyUserSerializer(serializers.ModelSerializer):
@@ -32,7 +23,7 @@ class MyUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MyUser
-        fields = ('id', 'username', 'email', 'password', 'password2', 'deposit', 'purchases')
+        fields = ['id', 'username', 'email', 'password', 'password2', 'deposit', 'purchases']
 
     def validate(self, data):
         if data['password'] != data['password2']:
@@ -52,14 +43,32 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ('id', 'title', 'description', 'price', 'quantity')
+        fields = ['id', 'title', 'description', 'price', 'quantity']
 
 
-class PurchaseCreateUpdateSerializer(serializers.ModelSerializer):
+class PurchaseCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Purchase
-        fields = ('customer', 'product', 'quantity')
+        fields = ['customer', 'product', 'quantity']
+        read_only_fields = ['customer']
+
+    def validate(self, data):
+        product = data.get('product')
+        quantity = data.get('quantity')
+
+        if quantity < 1:
+            raise serializers.ValidationError({'quantity': 'Quantity must be greater than zero.'})
+
+        if product.quantity < quantity:
+            raise serializers.ValidationError({'quantity': 'Not enough goods in stock.'})
+
+        customer_deposit = self.context.get('request').user.deposit
+
+        if product.price * quantity > customer_deposit:
+            raise serializers.ValidationError({'quantity': 'Not enough funds to make a purchase.'})
+
+        return data
 
 
 class PurchaseGetSerializer(serializers.ModelSerializer):
@@ -68,7 +77,7 @@ class PurchaseGetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Purchase
-        fields = ('id', 'product', 'quantity', 'purchase_amount', 'date', 'customer')
+        fields = ['id', 'product', 'quantity', 'purchase_amount', 'date', 'customer']
 
     def get_full_product_title(self, obj):
         return f'{obj.product.title} {obj.product.description}'
@@ -78,4 +87,20 @@ class ReturnPurchaseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ReturnPurchase
-        fields = ('id', 'purchase', 'date')
+        fields = ['id', 'purchase', 'date']
+
+    def validate_purchase(self, value):
+        request = self.context.get('request')
+        purchase_id = request.data.get('purchase')
+
+        try:
+            purchase = Purchase.objects.filter(customer=request.user).get(id=purchase_id)
+        except Purchase.DoesNotExist:
+            raise serializers.ValidationError('You dont have a purchase to return.')
+
+        check_time_period = timezone.now() - purchase.date
+
+        if check_time_period.seconds > RETURN_TIME_LIMIT:
+            raise serializers.ValidationError('Return time has expired.')
+
+        return value
