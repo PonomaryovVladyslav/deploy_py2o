@@ -1,6 +1,9 @@
 from django.db import transaction
 from rest_framework import viewsets, permissions
+from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter
+from rest_framework.generics import get_object_or_404
+from rest_framework.response import Response
 
 from store.API.filters import CustomerPurchaseFilter, PurchaseProductPriceFilter, CustomerProductFilter, \
     CustomerReturnsFilter
@@ -55,3 +58,24 @@ class ReturnPurchaseViewSet(viewsets.ModelViewSet):
     serializer_class = ReturnPurchaseSerializer
     filter_backends = [CustomerReturnsFilter]
     permission_classes = [IsAuthenticatedReadAndCreate]
+
+    @action(detail=True)
+    def reject_return(self, request, pk=None):
+        super().destroy(self, request, pk=pk)
+        return Response({'status': 'return rejected'})
+
+    @action(detail=True)
+    def approve_return(self, request, pk=None):
+        purchase = get_object_or_404(Purchase, returnpurchase=pk)
+        customer = purchase.customer
+        product = purchase.product
+
+        customer.deposit += purchase.purchase_amount
+        product.quantity += purchase.quantity
+
+        with transaction.atomic():
+            purchase.delete()
+            customer.save()
+            product.save()
+
+        return Response({'status': 'return approved'})
