@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'store.apps.StoreConfig',
     'rest_framework',
     'rest_framework.authtoken',
+    'storages',
 ]
 
 MIDDLEWARE = [
